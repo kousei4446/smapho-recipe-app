@@ -10,25 +10,20 @@
   position: fixed;
   top: 0;
   left: 0;
-  box-shadow: 0px 0px 17px 0px #777777;
+  box-shadow: 0px 0px 10px 0px #777777;
   border-radius: 0px;
 }
+
 
 .main{
   width: 100vw;
   height: 80vh;
   background-color: rgb(225, 215, 226);
   position: fixed;
-  top: 10vh;
+  top: 10.5vh;
   left: 0;
   overflow: hidden;
   overflow-y:scroll;
 }
 
-.foot{
-  width: 100vw;
-  height: 10vh;
-  position: fixed;
-  bottom: 0;
-  left: 0;
-}
+

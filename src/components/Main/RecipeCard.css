@@ -3,3 +3,27 @@
     box-shadow: 0px 0px 15px -5px #777777;
     border-radius: 10px;
 }
+
+.three_btn{
+    display: flex;
+    justify-content:left;
+    align-items: center;
+}
+
+.del-btn{
+    border: none;
+    background:none;
+    color: red;
+    font-size: 17px;
+}
+
+.edi-btn{
+    border: none;
+    background:none;
+    color: rgb(127, 156, 242);
+    font-size: 17px;
+}
+.det-btn{
+    border: none;
+    background:none;
+}

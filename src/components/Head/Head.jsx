@@ -6,7 +6,7 @@ function Head() {
   return (
     <div className='border'>
       <div className='head'>
-        <h3>Recipe Manager</h3>
+        <h2>Recipe Manager</h2>
       </div>
       <div>
 

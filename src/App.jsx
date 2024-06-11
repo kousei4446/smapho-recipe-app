@@ -9,13 +9,12 @@ function App() {
   return (
     <div className='all'>
       <div className='head'>
-        <Head />
+        <div className='shadow'>
+          <Head />
+        </div>
       </div>
       <div className='main'>
         <Main />
-      </div>
-      <div className='foot'>
-        <Foot />
       </div>
     </div>
   )

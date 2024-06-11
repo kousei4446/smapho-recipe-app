@@ -1,38 +1,31 @@
 import React, { useState } from 'react';
 import "./RecipeCard.css";
 import EditModal from './Modal/EditModal';
-import DetalModal from './Modal/DitalModal';
+import DetailModal from "./Modal/DetailModal "
+import { Visibility}from '@mui/icons-material';
 
-function RecipeCard({ recipes, deleteRecipe }) {
-  const [isModalEdit, setIsModalEdit] = useState(0);
-  const openEditModal = () => setIsModalEdit(1);
-  const openDetalModal = () => setIsModalEdit(2);
-  const closeModal = () => setIsModalEdit(0);
+
+function RecipeCard({ recipes, deleteRecipe, setRecipes }) {
+  const [activeRecipe, setActiveRecipe] = useState(null);
+  const closeModal = () => setActiveRecipe(null);
 
 
   return (
     <div>
       {recipes.map((recipe) => (
-        <div key={recipe.id}>
-          {isModalEdit === 1 ? (
-            <EditModal closeModal={closeModal} recipe={recipe} />
-          ) :(isModalEdit ===2 ? 
-            <DetalModal closeModal={closeModal} recipe={recipe}/> :
-            (
-                <div key={recipe.id} className='card'>
-                  <p>タイトル: {recipe.title}</p>
-                  <p>カテゴリー: {recipe.category}</p>
-                  <p>作成日: {recipe.createdAt}</p>
-                  <div>
-                    <button onClick={() => deleteRecipe(recipe.id)}>削除</button>
-                    <button onClick={openEditModal}>編集</button>
-                    <button onClick={openDetalModal}>詳細</button>
-                  </div>
-                </div>
-              )
-          ) }
+        <div key={recipe.id} className='card'>
+          <p>タイトル: {recipe.title}</p>
+          <p>カテゴリー: {recipe.category}</p>
+          <p>作成日: {recipe.createdAt}</p>
+          <div className='three_btn'>
+            <button className="del-btn" onClick={() => deleteRecipe(recipe.id)}>削除</button>
+            <button className="edi-btn" onClick={() => setActiveRecipe({ type: `edit`, recipe })}>編集</button>
+            <button className="det-btn" onClick={() => setActiveRecipe({ type: `detail`, recipe })}><Visibility/></button>
+          </div>
         </div>
       ))}
+      {activeRecipe && activeRecipe.type === "edit" && <EditModal closeModal={closeModal} recipe={activeRecipe.recipe} setRecipes={setRecipes} recipes={recipes} />}
+      {activeRecipe && activeRecipe.type === "detail" && <DetailModal closeModal={closeModal} recipe={activeRecipe.recipe} setRecipes={setRecipes} recipes={recipes} />}
     </div>
   );
 }

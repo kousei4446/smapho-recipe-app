@@ -1,7 +1,11 @@
 import React, { useEffect, useState } from 'react'
 import "./Main.css"
+import Foot from '../Foot/Foot';
 import RecipeCard from './RecipeCard';
-import Modal from './Modal/MainModal';
+import AddModal from './Modal/AddModal';
+import SearchModal from './Modal/SearchModal';
+
+
 
 function Main() {
   const [recipes, setRecipes] = useState(() => {
@@ -19,24 +23,45 @@ function Main() {
     }];
   });
 
-  useEffect(()=>{
-    localStorage.setItem("recipes",JSON.stringify(recipes))
-  },[recipes])
+  useEffect(() => {
+    localStorage.setItem("recipes", JSON.stringify(recipes))
+  }, [recipes])
 
   const deleteRecipe = (id) => {
     let updateRecipe = recipes.filter((recipe) => recipe.id !== id);
     setRecipes(updateRecipe)
   }
-  const [isModal, setIsMordal] = useState(false)
-  const closeModal = () => setIsMordal((prev) => !prev)
+
+  const [activeModal, setActiveModal] = useState(null);
+  const closeModal = () => setActiveModal(null)
+
+  const [filterRecipes, setFilterRecipes] = useState([])
+  const filterRecipeCard = (category) => {
+    let newRecipes = recipes.filter((recipe) => recipe.category === category);
+    setFilterRecipes([...newRecipes])
+    setActiveModal({ type: "filterCard" })
+  }
 
   return (
     <>
-      {isModal ? <Modal closeModal={closeModal} recipes={recipes} setRecipes={setRecipes}/> :
-        <div>
-          <button className='add-btn' onClick={() => setIsMordal((prev) => !prev)}>+</button>
-          <RecipeCard recipes={recipes} deleteRecipe={deleteRecipe} setRecipes={setRecipes}/>
-        </div>}
+      {activeModal ?
+        activeModal.type === "addModal" ?
+          <AddModal closeModal={closeModal} recipes={recipes} setRecipes={setRecipes} /> :
+          activeModal.type === "searchModal" ?
+            <SearchModal closeModal={closeModal} filterRecipeCard={filterRecipeCard} /> :
+            activeModal.type === "filterCard" ?(
+              <div>
+                <button onClick={()=>setActiveModal(null)}>戻る</button>
+                <RecipeCard recipes={filterRecipes} deleteRecipe={deleteRecipe} setRecipes={setRecipes}/> :
+              </div>
+            ):
+              null :
+        <RecipeCard recipes={recipes} deleteRecipe={deleteRecipe} setRecipes={setRecipes} />
+      }
+
+      <div className='foot'>
+        <Foot setActiveModal={setActiveModal} />
+      </div>
     </>
   )
 }
