@@ -9,3 +9,17 @@
     box-shadow: 0px 0px 5px 0px #777777;
     border-radius: 2px;
   }
+.main{
+  margin-top: 43px;
+  width: 100vw;
+  height: 78vh;
+  background-color: rgb(225, 215, 226);
+  position: fixed;
+  top: 10.5vh;
+  left: 0;
+  overflow: hidden;
+  overflow-y:scroll;
+  display: flex;
+  flex-wrap: wrap; 
+  justify-content: center;
+}

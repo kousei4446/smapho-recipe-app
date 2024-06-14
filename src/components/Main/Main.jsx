@@ -4,6 +4,7 @@ import Foot from '../Foot/Foot';
 import RecipeCard from './RecipeCard';
 import AddModal from './Modal/AddModal';
 import SearchModal from './Modal/SearchModal';
+import SearchBar from './SearchBar';
 
 
 
@@ -41,28 +42,33 @@ function Main() {
     setFilterRecipes([...newRecipes])
     setActiveModal({ type: "filterCard" })
   }
+  const [serch, setSerch] = useState(true)
 
   return (
-    <>
-      {activeModal ?
-        activeModal.type === "addModal" ?
-          <AddModal closeModal={closeModal} recipes={recipes} setRecipes={setRecipes} /> :
-          activeModal.type === "searchModal" ?
-            <SearchModal closeModal={closeModal} filterRecipeCard={filterRecipeCard} /> :
-            activeModal.type === "filterCard" ?(
-              <div>
-                <button onClick={()=>setActiveModal(null)}>戻る</button>
-                <RecipeCard recipes={filterRecipes} deleteRecipe={deleteRecipe} setRecipes={setRecipes}/> :
-              </div>
-            ):
-              null :
-        <RecipeCard recipes={recipes} deleteRecipe={deleteRecipe} setRecipes={setRecipes} />
-      }
+    <div style={{backgroundColor:"rgb(225, 215, 226)"}}>
+      <SearchBar recipes={recipes} setSerch={setSerch} setRecipes={setFilterRecipes} />
+      <div className='main'>
+        {activeModal ?
+          activeModal.type === "addModal" ?
+            <AddModal closeModal={closeModal} recipes={recipes} setRecipes={setRecipes} /> :
+            activeModal.type === "searchModal" ?
+              <SearchModal closeModal={closeModal} filterRecipeCard={filterRecipeCard} /> :
+              activeModal.type === "filterCard" ? (
+                <div>
+                  <button onClick={() => setActiveModal(null)}>戻る</button>
+                  <RecipeCard recipes={filterRecipes} deleteRecipe={deleteRecipe} setRecipes={setRecipes} /> :
+                </div>
+              ) :
+                null :
+          serch ? <RecipeCard recipes={recipes} deleteRecipe={deleteRecipe} setRecipes={setRecipes} /> :
+            <RecipeCard recipes={filterRecipes} deleteRecipe={deleteRecipe} setRecipes={setFilterRecipes} />
+        }
 
-      <div className='foot'>
-        <Foot setActiveModal={setActiveModal} />
+        <div className='foot'>
+          <Foot setActiveModal={setActiveModal} />
+        </div>
       </div>
-    </>
+    </div>
   )
 }
 
